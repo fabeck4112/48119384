@@ -157,14 +157,9 @@
                 font-size: 1.6rem;
             }
             
-            /* 移动端视频/直播样式调整 */
-            .video-container, .live-container {
+            /* 移动端视频样式调整 */
+            .video-container {
                 padding-bottom: 56.25%; /* 保持16:9比例 */
-            }
-            /* 移动端直播iframe自适应 */
-            .live-container iframe {
-                width: 100% !important;
-                height: 100% !important;
             }
         }
 
@@ -484,4 +479,421 @@
         }
         
         .video-container {
-            position:
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid #ffcc00;
+            background: #000;
+        }
+        
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: opacity 0.3s;
+        }
+        
+        .video-controls button {
+            background: none;
+            border: none;
+            color: #ffcc00;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px 10px;
+        }
+        
+        .video-controls button:hover {
+            color: #fff;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            margin: 0 15px;
+            height: 5px;
+            background: rgba(255, 204, 0, 0.3);
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #ffcc00;
+            width: 0%;
+            border-radius: 3px;
+        }
+        
+        .time-display {
+            color: #ddd;
+            font-size: 0.9rem;
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .volume-container {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        
+        .volume-slider {
+            width: 80px;
+            margin-left: 5px;
+        }
+        
+        .video-description {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #ddd;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 15px;
+            line-height: 1.7;
+        }
+        
+        .video-description strong {
+            color: #ffcc00;
+        }
+        
+        .fullscreen-btn {
+            background: none;
+            border: none;
+            color: #ffcc00;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        /* 自定义图片样式 */
+        .custom-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="logo.jpg" alt="天狼乌托邦服务器Logo" class="custom-img">
+            </div>
+            <h1>天狼乌托邦</h1>
+            <div class="subtitle">网易我的世界基岩版最佳多玩法养老生存服务器</div>
+            <div class="server-id">
+                <span class="digit">4</span>
+                <span class="digit">8</span>
+                <span class="digit">1</span>
+                <span class="digit">1</span>
+                <span class="digit">9</span>
+                <span class="digit">3</span>
+                <span class="digit">8</span>
+                <span class="digit">4</span>
+            </div>
+        </header>
+
+        <section class="features">
+            <h2 class="section-title">服务器特色</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon">
+                            <i class="fas fa-comments fa-2x" style="color: #ffcc00;"></i>
+                        </div>
+                        <h3 class="feature-title">群服互通</h3>
+                        <p class="feature-desc">将游戏服务器与QQ群联动，实现消息通知、绑定账号或跨平台管理</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt fa-2x" style="color: #ffcc00;"></i>
+                        </div>
+                        <h3 class="feature-title">反作弊机制</h3>
+                        <p class="feature-desc">检测并阻止外挂、作弊行为（如飞行、加速），维护公平竞技环境，保障服务器平衡</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon">
+                            <i class="fas fa-home fa-2x" style="color: #ffcc00;"></i>
+                        </div>
+                        <h3 class="feature-title">领地保护</h3>
+                        <p class="feature-desc">允许玩家圈地并设置权限，防止他人破坏或盗窃，保护私有建筑和资源</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="video-section">
+            <h2 class="video-title">服务器宣传视频</h2>
+            
+            <div class="video-container">
+                <video id="promoVideo" poster="视频封面.jpg">
+                    <source src="视频.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频播放。
+                </video>
+                <div class="video-controls">
+                    <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                    </div>
+                    <div class="volume-container">
+                        <button id="volumeBtn"><i class="fas fa-volume-up"></i></button>
+                        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.1" value="1">
+                    </div>
+                    <button id="fullscreenBtn" class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+            
+            <p class="video-description">
+                <strong>观看我们的宣传视频</strong>，体验天狼乌托邦服务器的独特魅力！视频展示了服务器特色玩法、
+                壮观建筑、社区活动和玩家互动。探索我们的养老生存世界，感受公平竞技环境和友好社区氛围！
+            </p>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section class="server-info">
+            <h2 class="server-title">多玩法养老生存服务器</h2>
+            
+            <div class="mission-statement">
+                <p><i class="fas fa-quote-left icon"></i>致力于为玩家提供最优质的游戏体验，打造公平、有趣、持久的游戏世界 <i class="fas fa-quote-right icon"></i></p>
+            </div>
+            
+            <div class="server-highlight">
+                <div class="highlight-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>安全可靠的游戏环境</h3>
+                <p>24小时在线监控，防止作弊行为，确保每位玩家都能在公平的环境中享受游戏乐趣。</p>
+            </div>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section class="team-section">
+            <h2 class="section-title">管理团队ヾ(•ω•`)o</h2>
+            
+            <div class="team-grid">
+                <div class="admin-card">
+                    <div class="admin-avatar">
+                        <img src="服主.jpg" alt="天狼_忘川" class="custom-img">
+                    </div>
+                    <h3 class="admin-name">天狼_忘川</h3>
+                    <div class="admin-role">服主</div>
+                    <p class="admin-desc">一只服主呀(づ￣ 3￣)づ</p>
+                </div>
+                
+                <div class="admin-card">
+                    <div class="admin-avatar">
+                        <img src="管理员1.jpg" alt="酷兔兔" class="custom-img">
+                    </div>
+                    <h3 class="admin-name">酷兔兔</h3>
+                    <div class="admin-role">指令师 & 主要负责人</div>
+                    <p class="admin-desc">服务器好多都是我弄得的(｡･∀･)ﾉﾞ喵~</p>
+                </div>
+                
+                <div class="admin-card">
+                    <div class="admin-avatar">
+                        <img src="管理员2.jpg" alt="山月" class="custom-img">
+                    </div>
+                    <h3 class="admin-name">山月</h3>
+                    <div class="admin-role">建筑师</div>
+                    <p class="admin-desc">很会建设服务器的(｡･∀･)ﾉﾞ喵~</p>
+                </div>
+                
+                <div class="admin-card">
+                    <div class="admin-avatar">
+                        <img src="管理员3.jpg" alt="神秘人" class="custom-img">
+                    </div>
+                    <h3 class="admin-name">神秘人</h3>
+                    <div class="admin-role">技术人员/指令师/网页开发者</div>
+                    <p class="admin-desc">你不需要知道这么多</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="contact">
+            <h2 class="contact-title">联系我们</h2>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-users"></i>
+                    <span>QQ群: 1022115206</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-server"></i>
+                    <span>服务器号: 48119384</span>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2025 天狼乌托邦 - 多玩法养老生存服务器, 保留所有权利.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const featureCards = document.querySelectorAll('.feature-card');
+            const adminCards = document.querySelectorAll('.admin-card');
+            const contactItems = document.querySelectorAll('.contact-item');
+            const highlight = document.querySelector('.server-highlight');
+            const videoSection = document.querySelector('.video-section');
+            
+            // 创建动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 应用动画效果
+            featureCards.forEach((card, index) => {
+                card.style.animation = `fadeInUp 0.8s ease-out ${index * 0.2}s forwards`;
+                card.style.opacity = '0';
+            });
+            
+            adminCards.forEach((card, index) => {
+                card.style.animation = `fadeInUp 0.8s ease-out ${index * 0.15 + 0.4}s forwards`;
+                card.style.opacity = '0';
+            });
+            
+            contactItems.forEach((item, index) => {
+                item.style.animation = `fadeInUp 0.8s ease-out ${index * 0.15 + 1.0}s forwards`;
+                item.style.opacity = '0';
+            });
+            
+            if (highlight) {
+                highlight.style.animation = `fadeInUp 0.8s ease-out 0.5s forwards`;
+                highlight.style.opacity = '0';
+            }
+            
+            if (videoSection) {
+                videoSection.style.animation = `fadeInUp 0.8s ease-out 0.7s forwards`;
+                videoSection.style.opacity = '0';
+            }
+            
+            // 视频播放器功能
+            const video = document.getElementById('promoVideo');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const progressBar = document.getElementById('progressBar');
+            const currentTimeDisplay = document.getElementById('currentTime');
+            const durationDisplay = document.getElementById('duration');
+            const volumeBtn = document.getElementById('volumeBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const progressContainer = document.querySelector('.progress-container');
+            
+            // 格式化时间显示
+            function formatTime(seconds) {
+                const min = Math.floor(seconds / 60);
+                const sec = Math.floor(seconds % 60);
+                return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+            }
+            
+            // 更新进度条
+            function updateProgress() {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+                currentTimeDisplay.textContent = formatTime(video.currentTime);
+            }
+            
+            // 设置视频时长
+            video.addEventListener('loadedmetadata', function() {
+                durationDisplay.textContent = formatTime(video.duration);
+            });
+            
+            // 播放/暂停
+            playPauseBtn.addEventListener('click', function() {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    video.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            });
+            
+            // 进度条点击
+            progressContainer.addEventListener('click', function(e) {
+                const rect = progressContainer.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                video.currentTime = pos * video.duration;
+            });
+            
+            // 时间更新
+            video.addEventListener('timeupdate', updateProgress);
+            
+            // 音量控制
+            volumeSlider.addEventListener('input', function() {
+                video.volume = volumeSlider.value;
+                volumeBtn.innerHTML = video.volume > 0 ? 
+                    '<i class="fas fa-volume-up"></i>' : 
+                    '<i class="fas fa-volume-mute"></i>';
+            });
+            
+            // 静音按钮
+            volumeBtn.addEventListener('click', function() {
+                video.muted = !video.muted;
+                if (video.muted) {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                } else {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }
+            });
+            
+            // 全屏按钮
+            fullscreenBtn.addEventListener('click', function() {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                }
+            });
+            
+            // 视频结束
+            video.addEventListener('ended', function() {
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+        });
+    </script>
+</body>
+</html>
